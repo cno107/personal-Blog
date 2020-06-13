@@ -4,6 +4,7 @@ import Head from 'next/head'
 import {Row,Col,Breadcrumb,Affix} from 'antd'
 import {} from '@ant-design/icons'
 
+import axios from 'axios'
 //markdown部分
 import ReactMarkdown from "react-markdown"
 import MarkdownNav from "markdown-navbar"
@@ -25,8 +26,11 @@ import {CalendarTwoTone,
 //test用md文件 上线后可以删除
 import markdownTest from "../public/js/markdownTest"
 
-export default function Detailed() {
 
+
+
+
+const Detailed = () =>{
     return (
         <div className="container">
             <Head>
@@ -52,29 +56,29 @@ export default function Detailed() {
                             <span><FireTwoTone />7864人</span>
                         </div>
                         <div className="detailed-content">
-                           <ReactMarkdown
-                               source={markdownTest}
-                               escapeHtml={false}
-                               />
+                            <ReactMarkdown
+                                source={markdownTest}
+                                escapeHtml={false}
+                            />
                         </div>
                     </div>
 
 
                 </Col>
                 <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
-                   <Author/>
-                   <Ad/>
-                   <Affix offsetTop={5}>
-                       <div className="detailed-nav comm-box">
-                           <div className="nav-title">atalog</div>
-                           <MarkdownNav
-                               className="article-menu"
-                               source={markdownTest}
-                               headingTopOffset={20}
-                               ordered={false}
-                           />
-                       </div>
-                   </Affix>
+                    <Author/>
+                    <Ad/>
+                    <Affix offsetTop={5}>
+                        <div className="detailed-nav comm-box">
+                            <div className="nav-title">atalog</div>
+                            <MarkdownNav
+                                className="article-menu"
+                                source={markdownTest}
+                                headingTopOffset={20}
+                                ordered={false}
+                            />
+                        </div>
+                    </Affix>
 
                 </Col>
             </Row>
@@ -82,3 +86,23 @@ export default function Detailed() {
         </div>
     )
 }
+
+
+Detailed.getInitialProps = async (ctx) =>{
+    console.log(ctx.id)
+    let id = ctx.query.id;
+
+    const promise = new Promise((resolve, reject)=>{
+        axios('http://127.0.0.1:7002/frontend/getArticleById/'+id).then(
+            (res)=>{
+                console.log(res)
+                resolve(res.data.data[0])
+            }
+        )
+
+    })
+    return await promise
+}
+
+
+export default Detailed
