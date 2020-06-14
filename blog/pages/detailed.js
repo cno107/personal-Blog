@@ -6,9 +6,11 @@ import {} from '@ant-design/icons'
 
 import axios from 'axios'
 //markdown部分
-import ReactMarkdown from "react-markdown"
-import MarkdownNav from "markdown-navbar"
-import  'markdown-navbar/dist/navbar.css'
+import marked from 'marked';
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
+import Tocify from 'tocify';
+
 
 import Header from '../components/Header'
 import Author from "../components/Author";
@@ -30,7 +32,35 @@ import markdownTest from "../public/js/markdownTest"
 
 
 
-const Detailed = () =>{
+const Detailed = (props) =>{
+
+   /* const tocify = new Tocify()
+    const renderer = new marked.Renderer();
+
+    renderer.heading = (text,level,raw) =>{
+        // ### phb   ###是level
+        const anchor = tocify.add(text,level)
+        return `<a id="${anchor}" href="#${anchor}" class="anchor-fix">
+                <h${level}>${text}</h${level}>
+                  </a>\n`
+    }
+    marked.setOptions({
+        renderer:renderer,
+        gfm:true,
+        pedantic:false,
+        sanitize:false,
+        tables:true,
+        breaks:false,
+        smartLists:true,
+        highlight:function (code) {
+            return hljs.highlightAuto(code).value
+        }
+    })
+    let html =marked( props.article_content);
+*/
+
+
+
     return (
         <div className="container">
             <Head>
@@ -55,11 +85,9 @@ const Detailed = () =>{
                             <span><FolderOpenTwoTone />视频教材</span>
                             <span><FireTwoTone />7864人</span>
                         </div>
-                        <div className="detailed-content">
-                            <ReactMarkdown
-                                source={markdownTest}
-                                escapeHtml={false}
-                            />
+                        <div className="detailed-content"
+                             dangerouslySetInnerHTML={{__html:html}}
+                        >
                         </div>
                     </div>
 
@@ -71,12 +99,7 @@ const Detailed = () =>{
                     <Affix offsetTop={5}>
                         <div className="detailed-nav comm-box">
                             <div className="nav-title">atalog</div>
-                            <MarkdownNav
-                                className="article-menu"
-                                source={markdownTest}
-                                headingTopOffset={20}
-                                ordered={false}
-                            />
+
                         </div>
                     </Affix>
 
@@ -93,7 +116,7 @@ Detailed.getInitialProps = async (ctx) =>{
     let id = ctx.query.id;
 
     const promise = new Promise((resolve, reject)=>{
-        axios('http://127.0.0.1:7002/frontend/getArticleById/'+id).then(
+        axios('http://127.0.0.1:7001/frontend/getArticleById/'+id).then(
             (res)=>{
                 console.log(res)
                 resolve(res.data.data[0])
