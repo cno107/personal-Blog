@@ -7,6 +7,13 @@ import {FolderOpenTwoTone,
     CalendarTwoTone
 } from '@ant-design/icons'
 
+
+//markdown部分
+import marked from 'marked'
+import hljs from "highlight.js";
+import 'highlight.js/styles/monokai-sublime.css';
+
+
 import Header from '../components/Header'
 import Author from "../components/Author";
 import Ad from '../components/Ad';
@@ -17,10 +24,28 @@ import '../static/style/components/ad.css'
 import '../static/style/components/footer.css'
 
 import axios from 'axios'
+import servicePath from "../config/apiURL";
+
 
 //自动获取axios的返回值，且必须是对象
 const Home = (list) => {
     const [mylist,setMylist] = useState(list.data)
+
+    const renderer = new marked.Renderer();
+    marked.setOptions({
+        renderer: renderer,
+        gfm: true,
+        pedantic: false,
+        sanitize: false,
+        tables: true,
+        breaks: false,
+        smartLists: true,
+        smartypants: false,
+        highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+        }
+    });
+
 
     return (
         <div className="container">
@@ -49,7 +74,10 @@ const Home = (list) => {
                                     <span><FolderOpenTwoTone />{item.typeName}</span>
                                     <span><FireTwoTone />{item.view_count}人</span>
                                 </div>
-                                <div className="list-context">{item.article_content}</div>
+                                <div className="list-context"
+                                     dangerouslySetInnerHTML={{__html:marked(item.article_content)}}>
+
+                                </div>
                             </List.Item>
                         )}
                     />
@@ -65,16 +93,16 @@ const Home = (list) => {
 }
 
 Home.getInitialProps = async () =>{
-    const pormise = new Promise((resolve, reject)=>{
-        axios('http://127.0.0.1:7002/frontend/getArticleList').then(
+    const promise = new Promise((resolve, reject)=>{
+        axios(servicePath.getArticleList).then(
             (res)=>{
-                console.log(res.data)
+             //   console.log(res.data)
                 resolve(res.data)
             }
         )
     })
 
-    return await pormise  //async的函数必须有await的返回值
+    return await promise  //async的函数必须有await的返回值
 }
 
 export default  Home

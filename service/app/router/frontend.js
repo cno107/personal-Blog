@@ -17,5 +17,8 @@ module.exports =xxx;*/
      router.get('/frontend/getArticleList',controller.frontend.home.getArticleList)
      router.get('/frontend/getArticleById/:id',controller.frontend.home.getArticleById)
      //配置参数传id
+     router.get('/frontend/getTypeInfo',controller.frontend.home.getTypeInfo)
+     router.get('/frontend/getListByTypeId/:id',controller.frontend.home.getListByTypeId)
+
 
  }

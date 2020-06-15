@@ -19,11 +19,7 @@ npm i @ant-design/icons -s
 
 npm add babel-plugin-import
 
-
-
-
-
-## 解析markdown
+# 解析markdown
 
 npm i -s react-markdown
 
@@ -53,11 +49,7 @@ import  'markdown-navbar/dist/navbar.css'
 + 导航指的是 md里 # 开头的段乱
   - '# p03:Vue3.0基础知识讲解\n'
 
-
-
-
-
-## 中台搭建
+# 中台搭建
 
 服务接口
 
@@ -111,7 +103,7 @@ let result = await this.app.mysql.get("blog_content",{})
 
 #### 数据库设计
 
-## 前中台结合
+# 前中台结合
 
 npm i -s axios    //blog
 
