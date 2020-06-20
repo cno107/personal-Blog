@@ -1,7 +1,8 @@
 import { Layout, Menu, Breadcrumb } from 'antd';
 import React,{useState} from "react";
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import  AddArticle from './AddArticle'
+import ArticleList from './ArticleList'
 import '../static/css/AdminIndex.css'
 import {
     DesktopOutlined,
@@ -15,14 +16,27 @@ import {
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-const AdminIndex = () =>{
+const AdminIndex = (props) =>{
     //控制侧边栏 关合状态
     const [collapsed,setCollapsed] = useState(false)
 
    const onCollapse = collapsed => {
         setCollapsed(collapsed)
     };
-        return (
+
+
+    const handleClickArticle = e=>{
+        console.log(e.item.props)
+        if(e.key==='addArticle'){
+            props.history.push('/index/add/')
+        }else{
+            props.history.push('/index/list')
+        }
+
+    }
+
+
+    return (
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
                     <div className="logo" />
@@ -33,10 +47,11 @@ const AdminIndex = () =>{
                         <Menu.Item key="2" icon={<DesktopOutlined />}>
                             添加文章
                         </Menu.Item>
-                        <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理">
-                            <Menu.Item key="3">添加文章</Menu.Item>
-                            <Menu.Item key="4">文章列表</Menu.Item>
-                            <Menu.Item key="5">删除文章</Menu.Item>
+                        <SubMenu key="sub1" icon={<UserOutlined />}
+                                 onClick={handleClickArticle}
+                                 title="文章管理" >
+                            <Menu.Item key="addArticle">添加文章</Menu.Item>
+                            <Menu.Item key="articleList">文章列表</Menu.Item>
                         </SubMenu>
 
                         <Menu.Item key="9" icon={<FileOutlined />} >留言管理</Menu.Item>
@@ -52,6 +67,10 @@ const AdminIndex = () =>{
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                             <div>
                                 <Route path="/index/" exact component={AddArticle}/>
+                                <Route path="/index/add/" exact component={AddArticle}/>
+                                <Route path="/index/add/:id" exact component={AddArticle}/>
+                                <Route path="/index/list/" exact component={ArticleList}/>
+
                             </div>
 
                         </div>

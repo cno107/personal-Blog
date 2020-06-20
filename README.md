@@ -129,5 +129,16 @@ config.security ={
     origin:'*',
     allowMethods:'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
   };
+
+
+//后台用户名密码登陆时 也在这里设置
+    origin:'http://localhost:3000',
+    credentials:true, //允许cook跨域
 ```
+
+
+
+# 后台开发
+
+### 中台路由守卫
 

@@ -1,12 +1,14 @@
 import  React,{useState} from 'react';
 import 'antd/dist/antd.css'
-import {Card,Input,Button,Spin} from "antd";
+import {Card,Input,Button,Spin,message} from "antd";
 import {SmileOutlined, YoutubeOutlined} from "@ant-design/icons";
 import '../static/css/Login.css';
+import servicePath from "../config/ApiURL";
+import axios from 'axios';
 
 
 
-const Login = () => {
+const Login = (props) => {
     //用户 密码 是否正在加载
     const [userName,setUserName] = useState('')
     const [password,setPassword] = useState('')
@@ -14,9 +16,41 @@ const Login = () => {
 
     const checkLogin = () => {
         setInLoading(true)
-        setTimeout(()=>{
-            setInLoading(false)
-        },1000)
+       if(!userName){
+           message.error('用户名不能为空')
+           setInLoading(false)
+           return false;
+       }else if(!password){
+           message.error('密码不能为空')
+           setInLoading(false)
+           return false;
+       }
+
+       let dataProps = {
+           'userName':userName,
+           'password':password
+       }
+
+       axios({
+           method:'post',
+           url:servicePath.checkLogin,
+           data:dataProps,
+           withCredentials:true
+       }).then(
+           res=>{
+               setInLoading(false)
+               if(res.data.data==="Login Success"){
+
+                  localStorage.setItem('openId',res.data.openId)
+                  props.history.push('./index')
+
+               }else if(res.data.data==="Login Failed"){
+                   message.error('Incorrect username or password.')
+               }
+           }
+       )
+
+
     }
 
     return (
