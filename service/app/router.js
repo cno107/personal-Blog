@@ -10,6 +10,7 @@
 
 module.exports = (app) => {
 
-  require('./router/frontend')(app)
+  require('./router/FE-router')(app);
+  require('./router/BE-router')(app);
 
 };
