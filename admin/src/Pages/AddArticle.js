@@ -22,11 +22,12 @@ const AddArticle = (props) => {
     const [showDate,setShowDate] = useState()   //发布日期
     const [updateDate,setUpdateDate] = useState() //修改日志的日期
     const [typeInfo ,setTypeInfo] = useState([]) // 文章类别信息
-    const [selectedType,setSelectType] = useState(1) //选择的文章类别
+    const [selectedType,setSelectType] = useState() //选择的文章类别
 
     useEffect(()=>{
         getTypeInfo()
         if(props.match.params.id){
+            setArticleId(props.match.params.id)
             getNeedEditArticle()
         }
 
@@ -175,7 +176,9 @@ const AddArticle = (props) => {
 
     //从编辑页面跳转 过来的，
     //读取url里的id，把当前id的东西渲染在页面上
+
     const getNeedEditArticle =  () =>{
+
         //拿到 需要编辑的文章 索引 (位于url后面)
         const editId =  props.match.params.id
 
@@ -189,7 +192,7 @@ const AddArticle = (props) => {
                 console.log(xx)
                 //把原来的内容全部打出来
                 setArticleTitle(xx.title);
-                setSelectType(3);
+                setSelectType(xx.type_id);
                 setArticleContent(xx.article_content);
                 setIntroduce(xx.introduce);
                 setShowDate(xx.addTime.replace('/','-'));
@@ -198,6 +201,8 @@ const AddArticle = (props) => {
                 setMarkdownContent(html)
                 let tmpInt = marked(xx.introduce)
                 setMarkdownIntroduce(tmpInt)
+
+                setSelectType(res.data.data.type_id)
 
 
 
@@ -234,7 +239,7 @@ const AddArticle = (props) => {
                         </Col>
                         <Col span={4}>
                             &nbsp;
-                            <Select defaultValue={selectedType} size="large" onChange={selectTypeHandler}>
+                            <Select defaultValue="select article type" size="large" onChange={selectTypeHandler}>
 
                                 {
 
