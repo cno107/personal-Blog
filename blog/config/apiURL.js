@@ -1,4 +1,4 @@
-let ipURL = 'http://127.0.0.1:7001/frontend/';
+let ipURL = 'http://39.106.163.253/fxx/frontend/';
 
 let servicePath = {
     getArticleList: ipURL+'getArticleList',  //首页api

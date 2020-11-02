@@ -6,7 +6,7 @@ import {HomeOutlined,SmileOutlined,GithubOutlined ,
     YoutubeOutlined,MessageOutlined
 } from "@ant-design/icons";
 import Router from "next/router";
-import Link from 'next/Link';
+import Link from "next/link";
 import axios from 'axios'
 import servicePath from "../config/apiURL";
 import Home from "../pages";

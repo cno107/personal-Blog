@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 3001",
+    "export": "next export"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
@@ -18,6 +19,7 @@
     "markdown-navbar": "^1.4.2",
     "marked": "^1.1.0",
     "next": "9.4.4",
+    "pm2": "^4.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-markdown": "^4.3.1"

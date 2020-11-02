@@ -1,4 +1,4 @@
-let ipURL = 'http://127.0.0.1:7001/backend/';
+let ipURL = 'http://39.106.163.253/bxx/backend/';
 
 let servicePath = {
     checkLogin: ipURL+'checkLogin',  //检查用户名密码
